@@ -5,31 +5,30 @@ import "./QuoteBox.css";
 class QuoteBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { quotes: [] };
-    this.getQuotes = this.getQuotes.bind(this);
+    this.state = {quotes: [''] };
+    this.fetchQuotes = this.fetchQuotes.bind(this);
   }
+
 
   componentDidMount() {
-    const quotes = this.getQuotes()
-    this.setState(
-      {quotes: quotes}
-    )
+    this.fetchQuotes();
   }
 
-  getQuotes = () => {
-    fetch('../quotes.json')
-    .then(function(response){console.log(response)
-    return response.json();})
-    .then(function(myJson) {
-      console.log(myJson);
-    })
-    .catch(err => console.log(err))
+  fetchQuotes() {
+    this.setState(() => {
+      fetch("https://farmerolaf.com/jsons/quotes.json")
+      .then(resolve => resolve.json())
+      .then(result => this.setState({
+        quotes: result
+      })).catch(console.log);
+
+  })
   }
 
   render() {
     return (
       <div id="quote-box">
-        <div id="text">{this.state.quotes ?? 'no quotes loaded'}</div>
+        <div id="text">{this.state.quotes[0] ?? 'no quotes loaded'}</div>
         <div id="author">author</div>
         <button id="new-quote">NEW QUOTE</button>
         <button id="tweet-quote">tweet-logo</button>

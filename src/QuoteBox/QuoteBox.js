@@ -5,7 +5,7 @@ import "./QuoteBox.css";
 class QuoteBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {quotes: [''] };
+    this.state = {quotes: [] };
     this.fetchQuotes = this.fetchQuotes.bind(this);
   }
 
@@ -16,11 +16,13 @@ class QuoteBox extends React.Component {
 
   fetchQuotes() {
     this.setState(() => {
-      fetch("https://farmerolaf.com/jsons/quotes.json")
+      fetch("http://localhost:8000/db")
+      // fetch("https://farmerolaf.com/jsons/quotes.json") // this is working
       .then(resolve => resolve.json())
-      .then(result => this.setState({
+      .then(result => {
+        return this.setState({
         quotes: result
-      })).catch(console.log);
+      })}).catch(console.log);
 
   })
   }

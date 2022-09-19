@@ -7,6 +7,7 @@ class QuoteBox extends React.Component {
     super(props);
     this.state = { quotes: []};
     this.fetchQuotes = this.fetchQuotes.bind(this);
+    this.rndQuoteNum = this.rndQuoteNum.bind(this);
   }
 
 
@@ -23,12 +24,17 @@ class QuoteBox extends React.Component {
       }).catch(console.log);
 
   }
+  // returns random quote number from quotes array if exists otherwise 0
+  rndQuoteNum() {
+    return  Math.floor(Math.random() * (this.state.quotes.length + 1)) ?? 0; 
+  }
 
   render() {
+
     return (
       <div id="quote-box">
-        <div id="text">{this.state.quotes[0]?.quote ?? "Can't load quotes"}</div>
-        <div id="author">{this.state.quotes[0]?.author ?? "Can't load author"}</div>
+        <div id="text">{this.state.quotes[this.rndQuoteNum()]?.quote ?? "loading quote..."}</div>
+        <div id="author">{this.state.quotes[this.rndQuoteNum()]?.author ?? "..."}</div>
         <button id="new-quote">NEW QUOTE</button>
         <button id="tweet-quote">tweet-logo</button>
       </div>

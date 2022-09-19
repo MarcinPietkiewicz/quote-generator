@@ -6,7 +6,7 @@ class QuoteBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = { quotes: []};
-    // this.fetchQuotes = this.fetchQuotes.bind(this);
+    this.fetchQuotes = this.fetchQuotes.bind(this);
   }
 
 
@@ -15,13 +15,11 @@ class QuoteBox extends React.Component {
   }
 
   fetchQuotes() {
-      fetch("http://localhost:8000/quotes")
-      // json-server --watch quotes.json --port 8000
-      // fetch("https://farmerolaf.com/jsons/quotes.json") // this is working
+      fetch("http://localhost:8000/db") //json-server dev mock-up // json-server --watch quotes.json --port 8000
+      // fetch("https://farmerolaf.com/jsons/quotes.json") // swap to this in production
       .then(response => response.json())
       .then(result => {
-        // console.log(result);
-        this.setState({quotes: result})
+        this.setState({quotes: result.quotes});
       }).catch(console.log);
 
   }
@@ -29,11 +27,10 @@ class QuoteBox extends React.Component {
   render() {
     return (
       <div id="quote-box">
-        <div id="text">{this.state.quotes[0]?.quote ?? 'no quotes loaded'}</div>
-        <div id="author">{this.state.quotes[0]?.author ?? 'no author loaded'}</div>
+        <div id="text">{this.state.quotes[0]?.quote ?? "Can't load quotes"}</div>
+        <div id="author">{this.state.quotes[0]?.author ?? "Can't load author"}</div>
         <button id="new-quote">NEW QUOTE</button>
         <button id="tweet-quote">tweet-logo</button>
-        {/* {console.log('state in quotes ->'+this.state.quotes[1]?.author ?? 'nope')} */}
       </div>
     );
   }

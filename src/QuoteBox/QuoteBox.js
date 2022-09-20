@@ -19,7 +19,7 @@ class QuoteBox extends React.Component {
       // fetch("https://farmerolaf.com/jsons/quotes.json") // swap to this in production
       .then((response) => response.json())
       .then((result) => {
-        let num = this.rndQuoteNum(result.quotes.length ?? 0);
+        let num = this.rndQuoteNum(result.quotes?.length ?? 0);
         this.setState({ rnd: num, quotes: result.quotes });
       })
       .catch((err) => console.log("Fetch error: " + err));

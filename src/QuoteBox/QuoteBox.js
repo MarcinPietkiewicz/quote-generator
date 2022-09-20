@@ -1,5 +1,6 @@
 import React from "react";
 import "./QuoteBox.css";
+import loadingIcon from "../assets/loader.svg";
 
 class QuoteBox extends React.Component {
   constructor(props) {
@@ -42,11 +43,11 @@ class QuoteBox extends React.Component {
     return (
       <div id="quote-box">
         <div id="text">
-          {this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.quote ?? "loading quote..." : "Error fetching quotes"}
+          {this.state.quotes !== undefined
+            ? this.state.quotes[this.state.rnd]?.quote ?? <img src={loadingIcon} alt="loading..." />
+            : "Error fetching quotes"}
         </div>
-        <div id="author">
-          {this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.author ?? "" : ""}
-        </div>
+        <div id="author">{this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.author ?? "" : ""}</div>
         <button id="tweet-quote">tweet-logo</button>
         <button id="new-quote" onClick={this.handleClick}>
           NEW QUOTE

@@ -16,7 +16,7 @@ class QuoteBox extends React.Component {
   }
 
   fetchQuotes() {
-      fetch("http://localhost:8000/dbj") //json-server dev mock-up // json-server --watch quotes.json --port 8000
+      fetch("http://localhost:8000/db") //json-server dev mock-up // json-server --watch quotes.json --port 8000
       // fetch("https://farmerolaf.com/jsons/quotes.json") // swap to this in production
       .then(response => response.json())
       .then(result => {

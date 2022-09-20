@@ -25,4 +25,5 @@ yarn-error.log*
 # misc
 task.txt
 quotes.json
+json-server.json
 

@@ -1,6 +1,8 @@
 import React from "react";
 import "./QuoteBox.css";
-import loadingIcon from "../assets/loader.svg";
+import loadingIcon from "../assets/circle-loading.svg";
+import tumblrLogo from "../assets/tumblr-logo.svg";
+import twitterLogo from "../assets/twitter-logo.svg";
 
 class QuoteBox extends React.Component {
   constructor(props) {
@@ -48,7 +50,8 @@ class QuoteBox extends React.Component {
             : "Error fetching quotes"}
         </div>
         <div id="author">{this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.author ?? "" : ""}</div>
-        <button id="tweet-quote">tweet-logo</button>
+        <button id="twitter-quote"><img src={twitterLogo} alt="twitter logo"/></button>
+        <button id="tumblr-quote"><img src={tumblrLogo} alt="tumblr logo" onClick={this.handleClick}/></button>
         <button id="new-quote" onClick={this.handleClick}>
           NEW QUOTE
         </button>

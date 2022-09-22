@@ -1,8 +1,8 @@
 import React from "react";
 import "./QuoteBox.css";
 import loadingIcon from "../assets/circle-loading.svg";
-import tumblrLogo from "../assets/tumblr-logo.svg";
-import twitterLogo from "../assets/twitter-logo.svg";
+import twitterLogo from "../assets/twitter.svg";
+import nextLogo from "../assets/feather.svg";
 
 class QuoteBox extends React.Component {
   constructor(props) {
@@ -43,22 +43,40 @@ class QuoteBox extends React.Component {
 
   render() {
     return (
-      <div id="quote-box">
+      <div key={Math.random()} id="quote-box" className="quote-box-animate">
         <div id="text">
           {this.state.quotes !== undefined
             ? this.state.quotes[this.state.rnd]?.quote ?? <img src={loadingIcon} alt="loading..." />
             : "Error fetching quotes"}
         </div>
         <div id="author">{this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.author ?? "" : ""}</div>
-        <img className="icon-button" id="twitter-quote" src={twitterLogo} alt="twitter logo" onClick={this.handleClick}/>
-        <img className="icon-button" id="tumblr-quote" src={tumblrLogo} alt="tumblr logo" onClick={this.handleClick} />
-      
-        <button id="new-quote" onClick={this.handleClick}>
-          NEW QUOTE
-        </button>
+
+        <div id="buttons">
+          <img
+            className="icon-button"
+            id="twitter-quote"
+            src={twitterLogo}
+            alt="twitter logo"
+            onClick={this.handleClick}
+          />
+          <button id="new-quote" onClick={this.handleClick}>
+            <img className="icon-button" src={nextLogo} alt="new quote logo" id="logo" />
+            new quote
+          </button>
+        </div>
       </div>
     );
   }
 }
-
+/*
+Arial (sans-serif)
+Verdana (sans-serif)
+Tahoma (sans-serif)
+Trebuchet MS (sans-serif)
+Times New Roman (serif)
+Georgia (serif)
+Garamond (serif)
+Courier New (monospace)
+Brush Script MT (cursive)
+*/
 export default QuoteBox;

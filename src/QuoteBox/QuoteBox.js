@@ -18,7 +18,7 @@ class QuoteBox extends React.Component {
   }
 
   fetchQuotes() {
-    fetch("http://localhost:8000/db") //json-server dev mock-up // json-server --watch quotes.json --port 8000
+    fetch("http://localhost:8000/db") //json-server --watch quotes.json --port 8000
       // fetch("https://farmerolaf.com/jsons/quotes.json") // swap to this in production
       .then((response) => response.json())
       .then((result) => {
@@ -50,8 +50,9 @@ class QuoteBox extends React.Component {
             : "Error fetching quotes"}
         </div>
         <div id="author">{this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.author ?? "" : ""}</div>
-        <button id="twitter-quote"><img src={twitterLogo} alt="twitter logo"/></button>
-        <button id="tumblr-quote"><img src={tumblrLogo} alt="tumblr logo" onClick={this.handleClick}/></button>
+        <img className="icon-button" id="twitter-quote" src={twitterLogo} alt="twitter logo" onClick={this.handleClick}/>
+        <img className="icon-button" id="tumblr-quote" src={tumblrLogo} alt="tumblr logo" onClick={this.handleClick} />
+      
         <button id="new-quote" onClick={this.handleClick}>
           NEW QUOTE
         </button>

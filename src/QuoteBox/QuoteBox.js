@@ -11,6 +11,7 @@ class QuoteBox extends React.Component {
     this.fetchQuotes = this.fetchQuotes.bind(this);
     this.rndQuoteNum = this.rndQuoteNum.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.setTwitterAttributes = this.setTwitterAttributes.bind(this);
   }
 
   componentDidMount() {
@@ -18,12 +19,17 @@ class QuoteBox extends React.Component {
   }
 
   fetchQuotes() {
-    fetch("http://localhost:8000/db") //json-server --watch quotes.json --port 8000
-      // fetch("https://farmerolaf.com/jsons/quotes.json") // swap to this in production
+    // fetch("http://localhost:8000/db") //development local server //json-server --watch quotes.json --port 8000
+      fetch("https://farmerolaf.com/jsons/quotes.json") // swap to this in production
       .then((response) => response.json())
       .then((result) => {
         let num = this.rndQuoteNum(result.quotes?.length ?? 0);
         this.setState({ rnd: num, quotes: result.quotes });
+      })
+      .then(() => {setTimeout(() => {
+        console.log(this.state.quotes[this.state.rnd]);
+        this.setTwitterAttributes(this.state.quotes[this.state.rnd].quote,this.state.quotes[this.state.rnd].author);
+      },200)
       })
       .catch((err) => console.log("Fetch error: " + err));
   }
@@ -36,14 +42,28 @@ class QuoteBox extends React.Component {
     }
   }
 
+  setTwitterAttributes(quote, author) {
+    document
+      .getElementById("tweet-quote")
+      .setAttribute(
+        "href",
+        "https://twitter.com/intent/tweet?hashtags=quotes&text=" + encodeURIComponent('"' + quote + '" \n' + author)
+      );
+  }
+
   handleClick() {
     const r = this.rndQuoteNum(this.state.quotes.length);
-    return this.setState({ rnd: r });
+    this.setState({ rnd: r });
+    setTimeout(() => {
+      this.setTwitterAttributes(this.state.quotes[this.state.rnd].quote,this.state.quotes[this.state.rnd].author);
+      console.log(this.state.quotes[this.state.rnd]);
+    },200)
   }
+
 
   render() {
     return (
-      <div key={Math.random()} id="quote-box" className="quote-box-animate">
+      <div id="quote-box">
         <div id="text">
           {this.state.quotes !== undefined
             ? this.state.quotes[this.state.rnd]?.quote ?? <img src={loadingIcon} alt="loading..." />
@@ -52,13 +72,14 @@ class QuoteBox extends React.Component {
         <div id="author">{this.state.quotes !== undefined ? this.state.quotes[this.state.rnd]?.author ?? "" : ""}</div>
 
         <div id="buttons">
-          <img
-            className="icon-button"
-            id="twitter-quote"
-            src={twitterLogo}
-            alt="twitter logo"
-            onClick={this.handleClick}
-          />
+          <a id="tweet-quote" target="_blank">
+            <img
+              className="icon-button"
+              id="twitter-quote"
+              src={twitterLogo}
+              alt="twitter logo"
+            />
+          </a>
           <button id="new-quote" onClick={this.handleClick}>
             <img className="icon-button" src={nextLogo} alt="new quote logo" id="logo" />
             new quote
@@ -68,15 +89,7 @@ class QuoteBox extends React.Component {
     );
   }
 }
-/*
-Arial (sans-serif)
-Verdana (sans-serif)
-Tahoma (sans-serif)
-Trebuchet MS (sans-serif)
-Times New Roman (serif)
-Georgia (serif)
-Garamond (serif)
-Courier New (monospace)
-Brush Script MT (cursive)
-*/
+
+
+
 export default QuoteBox;
